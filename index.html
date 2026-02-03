@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="kk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML ойын генераторы</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <p class="eyebrow">Kazakh Language Game</p>
+        <h1>HTML ойын жасайтын генератор</h1>
+        <p class="lead">
+          Бұл құрал сізге шағын сұрақ-жауап ойынын HTML, CSS және JavaScript ретінде шығарып береді.
+          Параметрлерді толтырыңыз да, дайын кодты көшіріп алыңыз.
+        </p>
+      </header>
+
+      <section class="card">
+        <h2>Ойын параметрлері</h2>
+        <form id="generator-form">
+          <div class="field">
+            <label for="game-title">Ойын атауы</label>
+            <input
+              id="game-title"
+              name="gameTitle"
+              type="text"
+              placeholder="Мысалы: Қазақша сөздер"
+              value="Қазақша сөздер"
+              required
+            />
+          </div>
+          <div class="field">
+            <label for="game-description">Қысқаша сипаттама</label>
+            <textarea
+              id="game-description"
+              name="gameDescription"
+              rows="3"
+              placeholder="Ойын туралы 1-2 сөйлем жазыңыз"
+              required
+            >
+Төмендегі сұраққа дұрыс жауап беріңіз.</textarea>
+          </div>
+          <div class="field">
+            <label for="game-question">Негізгі сұрақ</label>
+            <input
+              id="game-question"
+              name="gameQuestion"
+              type="text"
+              placeholder="Мысалы: Қазақстанның астанасы қай қала?"
+              value="Қазақстанның астанасы қай қала?"
+              required
+            />
+          </div>
+          <div class="field">
+            <label for="game-answer">Дұрыс жауап</label>
+            <input
+              id="game-answer"
+              name="gameAnswer"
+              type="text"
+              placeholder="Мысалы: Астана"
+              value="Астана"
+              required
+            />
+          </div>
+          <div class="field">
+            <label for="accent-color">Негізгі түс</label>
+            <input id="accent-color" name="accentColor" type="color" value="#4f46e5" />
+          </div>
+          <div class="actions">
+            <button type="submit" class="primary">Кодты жасау</button>
+            <button type="button" id="reset" class="ghost">Тазарту</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card output">
+        <div class="output-header">
+          <h2>Дайын HTML</h2>
+          <div class="output-actions">
+            <button type="button" id="copy" class="ghost">Көшіріп алу</button>
+            <button type="button" id="download" class="ghost">Файл ретінде жүктеу</button>
+          </div>
+        </div>
+        <textarea id="result" rows="16" readonly placeholder="Бұл жерде дайын HTML пайда болады..."></textarea>
+        <p class="hint">
+          Кеңес: HTML файлын сақтап, браузерде ашсаңыз, ойын бірден жұмыс істейді.
+        </p>
+      </section>
+
+      <section class="card preview">
+        <h2>Алдын ала қарау</h2>
+        <div id="preview" class="preview-surface" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <footer class="footer">Ойынды өз қажеттілігіңізге қарай өзгерте аласыз.</footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Сөз таптары — Топтық ойын</title>
+  <style>
+    :root {
+      --sun: #ffd54f;
+      --sky: #4fc3f7;
+      --emerald: #26a69a;
+      --berry: #ec407a;
+      --saffron: #ff8f00;
+      --ink: #1a237e;
+      --cream: #fff8e1;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at top, #fffde7 0%, #e1f5fe 45%, #fff3e0 100%);
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 32px 16px 16px;
+      text-align: center;
+      background: linear-gradient(90deg, #ffecb3, #b2ebf2, #f8bbd0);
+      border-bottom: 6px solid var(--saffron);
+      position: relative;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 0 auto;
+      max-width: 720px;
+      font-size: 1.1rem;
+    }
+
+    .ornament {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--emerald);
+      color: var(--white);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 0.8rem;
+      box-shadow: 0 6px 12px rgba(38, 166, 154, 0.3);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(26, 35, 126, 0.1);
+      border: 3px solid rgba(255, 213, 79, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(255, 213, 79, 0.6), rgba(255, 213, 79, 0));
+      border-radius: 50%;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.3rem;
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 8px;
+      border-radius: 12px;
+      border: 2px solid #bbdefb;
+      font-size: 1rem;
+    }
+
+    button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: var(--berry);
+      color: var(--white);
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 15px rgba(236, 64, 122, 0.3);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 20px rgba(236, 64, 122, 0.35);
+    }
+
+    .secondary {
+      background: var(--emerald);
+      box-shadow: 0 8px 15px rgba(38, 166, 154, 0.3);
+    }
+
+    .scoreboard {
+      display: grid;
+      gap: 12px;
+    }
+
+    .team {
+      background: var(--cream);
+      padding: 12px 16px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 2px dashed #ffe082;
+    }
+
+    .team input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 48px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--sky);
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    .question {
+      font-size: 1.6rem;
+      margin: 16px 0 6px;
+    }
+
+    .options {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .option-btn {
+      background: #ffe0b2;
+      color: #5d4037;
+      box-shadow: none;
+      border: 2px solid transparent;
+    }
+
+    .option-btn.correct {
+      background: #c8e6c9;
+      border-color: #2e7d32;
+    }
+
+    .option-btn.incorrect {
+      background: #ffcdd2;
+      border-color: #c62828;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      font-weight: 700;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .legend {
+      display: grid;
+      gap: 8px;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #455a64;
+    }
+
+    @media (max-width: 600px) {
+      .question {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="ornament">Қазақи ойын</div>
+    <h1>Сөз таптары — топтық зерде жарысы</h1>
+    <p>
+      Оқушыларды топтарға бөліп, әр сөздің сөз табын анықтаңыз. Дұрыс жауап үшін ұпай жинап,
+      ең белсенді топты анықтаңыз!
+    </p>
+  </header>
+
+  <main>
+    <section class="grid">
+      <div class="card">
+        <h2>Топтарды дайындау</h2>
+        <label for="teamName">Жаңа топ атауы</label>
+        <input id="teamName" type="text" placeholder="Мысалы: Алтын қыран" />
+        <div class="controls">
+          <button id="addTeam">Топ қосу</button>
+          <button id="resetGame" class="secondary">Ойынды жаңарту</button>
+        </div>
+        <p class="legend">Белсенді топты таңдау үшін тізімдегі радиобатырманы белгілеңіз.</p>
+      </div>
+
+      <div class="card">
+        <h2>Ұпай тақтасы</h2>
+        <div id="scoreboard" class="scoreboard"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Сұрақ</h2>
+      <div class="question" id="questionWord">Ойынды бастау үшін төмендегі батырманы басыңыз.</div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+      <div class="controls">
+        <button id="nextQuestion">Келесі сөз</button>
+        <button id="showHint" class="secondary">Көмек</button>
+      </div>
+      <p class="legend" id="hint">Көмек: сөз табын анықтауда сұрақ қойып көріңіз (кім? не? қандай? қалай?).</p>
+    </section>
+  </main>
+
+  <footer>
+    Қазақ тілі сабақтарына арналған интерактивті ойын үлгісі.
+  </footer>
+
+  <script>
+    const questions = [
+      { word: "Кітап", pos: "Зат есім" },
+      { word: "Жүгіру", pos: "Етістік" },
+      { word: "Әдемі", pos: "Сын есім" },
+      { word: "Ертең", pos: "Үстеу" },
+      { word: "Үш", pos: "Сан есім" },
+      { word: "Мен", pos: "Есімдік" },
+      { word: "Дәл", pos: "Демеулік" },
+      { word: "Ой", pos: "Одағай" },
+      { word: "Ал", pos: "Шылау" },
+      { word: "Мектепте", pos: "Зат есім" },
+      { word: "Оқыды", pos: "Етістік" },
+      { word: "Жылдам", pos: "Үстеу" },
+      { word: "Қазақы", pos: "Сын есім" },
+      { word: "Сегіз", pos: "Сан есім" },
+      { word: "Сен", pos: "Есімдік" }
+    ];
+
+    const parts = [
+      "Зат есім",
+      "Етістік",
+      "Сын есім",
+      "Үстеу",
+      "Сан есім",
+      "Есімдік",
+      "Шылау",
+      "Одағай",
+      "Демеулік"
+    ];
+
+    const teamInput = document.getElementById("teamName");
+    const addTeamBtn = document.getElementById("addTeam");
+    const scoreboard = document.getElementById("scoreboard");
+    const questionWord = document.getElementById("questionWord");
+    const options = document.getElementById("options");
+    const feedback = document.getElementById("feedback");
+    const nextQuestionBtn = document.getElementById("nextQuestion");
+    const hintBtn = document.getElementById("showHint");
+    const hintText = document.getElementById("hint");
+    const resetBtn = document.getElementById("resetGame");
+
+    let teams = [
+      { name: "Қырандар", score: 0, id: crypto.randomUUID() },
+      { name: "Тұлпарлар", score: 0, id: crypto.randomUUID() }
+    ];
+
+    let currentQuestion = 0;
+    let usedQuestions = [];
+    hintText.style.display = "none";
+
+    const shuffle = (array) => {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    };
+
+    const renderTeams = () => {
+      scoreboard.innerHTML = "";
+      teams.forEach((team, index) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "team";
+
+        const label = document.createElement("label");
+        label.style.display = "flex";
+        label.style.alignItems = "center";
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = "activeTeam";
+        radio.value = team.id;
+        if (index === 0) {
+          radio.checked = true;
+        }
+
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = team.name;
+
+        label.appendChild(radio);
+        label.appendChild(nameSpan);
+
+        const score = document.createElement("span");
+        score.className = "badge";
+        score.textContent = `${team.score} ұпай`;
+
+        wrapper.appendChild(label);
+        wrapper.appendChild(score);
+
+        scoreboard.appendChild(wrapper);
+      });
+    };
+
+    const getActiveTeam = () => {
+      const selected = document.querySelector("input[name='activeTeam']:checked");
+      if (!selected) return null;
+      return teams.find((team) => team.id === selected.value);
+    };
+
+    const updateScores = (teamId, delta) => {
+      teams = teams.map((team) =>
+        team.id === teamId ? { ...team, score: team.score + delta } : team
+      );
+      renderTeams();
+    };
+
+    const renderQuestion = () => {
+      if (usedQuestions.length === questions.length) {
+        feedback.textContent = "Барлық сөздер аяқталды! Ойынды жаңартып қайта бастаңыз.";
+        questionWord.textContent = "Ойын аяқталды";
+        options.innerHTML = "";
+        return;
+      }
+
+      let nextIndex = currentQuestion;
+      while (usedQuestions.includes(nextIndex)) {
+        nextIndex = Math.floor(Math.random() * questions.length);
+      }
+      currentQuestion = nextIndex;
+      usedQuestions.push(currentQuestion);
+
+      const current = questions[currentQuestion];
+      questionWord.textContent = `Сөз: ${current.word}`;
+      feedback.textContent = "";
+
+      options.innerHTML = "";
+      shuffle(parts).forEach((part) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.textContent = part;
+        btn.addEventListener("click", () => handleAnswer(part, btn));
+        options.appendChild(btn);
+      });
+    };
+
+    const handleAnswer = (answer, button) => {
+      const active = getActiveTeam();
+      if (!active) {
+        feedback.textContent = "Алдымен белсенді топты таңдаңыз.";
+        return;
+      }
+
+      const correct = questions[currentQuestion].pos === answer;
+      const allButtons = options.querySelectorAll("button");
+      allButtons.forEach((btn) => btn.setAttribute("disabled", true));
+
+      if (correct) {
+        button.classList.add("correct");
+        feedback.textContent = `Дұрыс! ${active.name} 1 ұпай алды.`;
+        updateScores(active.id, 1);
+      } else {
+        button.classList.add("incorrect");
+        feedback.textContent = `Қате. Дұрыс жауап: ${questions[currentQuestion].pos}.`;
+      }
+    };
+
+    addTeamBtn.addEventListener("click", () => {
+      const name = teamInput.value.trim();
+      if (!name) {
+        feedback.textContent = "Топ атауын енгізіңіз.";
+        return;
+      }
+      teams.push({ name, score: 0, id: crypto.randomUUID() });
+      teamInput.value = "";
+      renderTeams();
+      feedback.textContent = `"${name}" тобы қосылды.`;
+    });
+
+    nextQuestionBtn.addEventListener("click", renderQuestion);
+
+    hintBtn.addEventListener("click", () => {
+      hintText.style.display = hintText.style.display === "none" ? "block" : "none";
+    });
+
+    resetBtn.addEventListener("click", () => {
+      usedQuestions = [];
+      teams = teams.map((team) => ({ ...team, score: 0 }));
+      renderTeams();
+      feedback.textContent = "Ойын жаңартылды. Келесі сөзді таңдаңыз.";
+      questionWord.textContent = "Сөздерді қайта бастаңыз!";
+      options.innerHTML = "";
+    });
+
+    renderTeams();
+  </script>
+</body>
+</html>
